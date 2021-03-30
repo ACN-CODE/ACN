@@ -8,7 +8,7 @@ of 133.7% on MS-COCO Karpathy test split announced so far. This paper innovative
 
 # Data preparation：
 * 1.Download the bottom up features（https://github.com/peteanderson80/bottom-up-attention） and convert them to npz files
-python tools/create_feats.py --infeats bottom_up_tsv --outfolder ./mscoco/feature/up_down_36
+```python tools/create_feats.py --infeats bottom_up_tsv --outfolder ./mscoco/feature/up_down_36```
 * 2.Download the annotations（https://drive.google.com/open?id=1i5YJRSZtpov0nOtRyfM0OS1n0tPCGiCS） into the mscoco folder.
 * 3.Download coco-caption（https://github.com/ruotianluo/coco-caption） and setup the path of __C.INFERENCE.COCO_PATH in lib/config.py
 
