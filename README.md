@@ -15,4 +15,4 @@ of 133.7% on MS-COCO Karpathy test split announced so far. This paper innovative
 
 # Training：
 Train ACN model
-bash experiments/acn/train.sh
+```bash experiments/acn/train.sh```
