@@ -23,16 +23,16 @@ DATA_LOADER:
   NUM_WORKERS: 4
   SHUFFLE: True
   TRAIN_GV_FEAT: ''
-  TRAIN_ATT_FEATS: '/software_liuyuanqiu_yh/data/mscoco/feature/up_down_36'
+  TRAIN_ATT_FEATS: './mscoco/feature/up_down_36'
   VAL_GV_FEAT: ''
-  VAL_ATT_FEATS: '/software_liuyuanqiu_yh/data/mscoco/feature/up_down_36'
+  VAL_ATT_FEATS: './mscoco/feature/up_down_36'
   TEST_GV_FEAT: ''
-  TEST_ATT_FEATS: '/software_liuyuanqiu_yh/data/mscoco/feature/up_down_36'
-  TRAIN_ID: '/software_liuyuanqiu_yh/data/mscoco/txt/coco_train_image_id.txt'
-  VAL_ID: '/software_liuyuanqiu_yh/data/mscoco/txt/coco_val_image_id.txt'
-  TEST_ID: '/software_liuyuanqiu_yh/data/mscoco/txt/coco_test_image_id.txt'
-  INPUT_SEQ_PATH: '/software_liuyuanqiu_yh/data/mscoco/sent/coco_train_input.pkl'
-  TARGET_SEQ_PATH: '/software_liuyuanqiu_yh/data/mscoco/sent/coco_train_target.pkl'
+  TEST_ATT_FEATS: './mscoco/feature/up_down_36'
+  TRAIN_ID: './mscoco/txt/coco_train_image_id.txt'
+  VAL_ID: './mscoco/txt/coco_val_image_id.txt'
+  TEST_ID: './mscoco/txt/coco_test_image_id.txt'
+  INPUT_SEQ_PATH: './mscoco/sent/coco_train_input.pkl'
+  TARGET_SEQ_PATH: './mscoco/sent/coco_train_target.pkl'
   SEQ_PER_IMG: 5
   MAX_FEAT: -1
 
@@ -78,22 +78,17 @@ MODEL:
     ENCODE_ATT_MID_DROPOUT: 0.0
     DECODE_ATT_MID_DROPOUT: 0.0
     ATT_DIM: 1024
-    #HEAD_DIM: 128
+    HEAD_DIM: 128
     ACT: 'CELU'
     ENCODE_DROPOUT: 0.5
     DECODE_DROPOUT: 0.5
-    #ENCODE_LAYERS: 4
     ENCODE_LAYERS: 1
     DECODE_LAYERS: 1
-    #TYPE: 'LowRank'
     TYPE: 'CapsuleLowRank'
-    #ATTTYPE: 'SCAtt' # SCAtt, BasicAtt
     ENCODE_ATTTYPE: 'Capsule' # SCAtt, BasicAtt
-    #ENCODE_ATTTYPE: 'SCAtt' # SCAtt, BasicAtt
     DECODE_ATTTYPE: 'SCAtt'  # SCAtt, BasicAtt
     HEAD: 8
     ENCODE_BLOCK: 'CapsuleLowRankBilinearEnc'
-    #ENCODE_BLOCK: 'LowRankBilinearEnc'
     DECODE_BLOCK: 'LowRankBilinearDec'
     ELU_ALPHA: 1.3
     ENCODE_BIFEAT_EMB_DROPOUT: 0.3
@@ -143,16 +138,16 @@ LOSSES:
 SCORER:
   TYPES: ['CIDEr']
   WEIGHTS: [1.0]
-  GT_PATH: '/software_liuyuanqiu_yh/data/mscoco/misc/coco_train_gts.pkl'
-  CIDER_CACHED: '/software_liuyuanqiu_yh/data/mscoco/misc/coco_train_cider.pkl'
+  GT_PATH: './mscoco/misc/coco_train_gts.pkl'
+  CIDER_CACHED: './mscoco/misc/coco_train_cider.pkl'
   
 ############################ INFERENCE ############################
 INFERENCE:
-  VOCAB: '/software_liuyuanqiu_yh/data/mscoco/txt/coco_vocabulary.txt'
+  VOCAB: './mscoco/txt/coco_vocabulary.txt'
   ID_KEY: 'image_id'
   CAP_KEY: 'caption'
   EVAL: 'COCO'
-  VAL_ANNFILE: '/software_liuyuanqiu_yh/data/mscoco/misc/captions_val5k.json'
-  TEST_ANNFILE: '/software_liuyuanqiu_yh/data/mscoco/misc/captions_test5k.json'
+  VAL_ANNFILE: './mscoco/misc/captions_val5k.json'
+  TEST_ANNFILE: './mscoco/misc/captions_test5k.json'
   BEAM_SIZE: 3
   GREEDY_DECODE: True
