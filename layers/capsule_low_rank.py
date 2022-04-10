@@ -63,8 +63,13 @@ class CapsuleLowRank(nn.Module):
         # copy from sc_att
         self.attention_last1 = nn.Linear(mid_dims[-2], 1)   
         self.attention_last2 = nn.Linear(mid_dims[-2], mid_dims[-1])  
-
-
+        sequential = []                  
+        for i in range(1, len(mid_dims) - 1):                     
+            sequential.append(nn.Linear(mid_dims[i - 1], 256))                          
+            sequential.append(nn.ReLU())                          
+            if mid_dropout > 0:                                  
+                sequential.append(nn.Dropout(mid_dropout))                  
+        self.attention_basic1 = nn.Sequential(*sequential) if len(sequential) > 0 else None
 
     def apply_to_states(self, fn):           
         self.buffer_keys = fn(self.buffer_keys)
@@ -103,23 +108,22 @@ class CapsuleLowRank(nn.Module):
         attn_map = q.unsqueeze(1) * k 
 
         if self.attention_basic is not None:   
-            att_map1 = self.attention_basic(attn_map) 
+            att_map1 = self.attention_basic1(attn_map) 
         att_mask = mask
         if att_mask is not None:
             att_mask = att_mask.unsqueeze(1)   
             att_mask_ext = att_mask.unsqueeze(-1).transpose(1, 2) 
             
-            att_map_pool = torch.sum(att_map1 * att_mask_ext, -2) / torch.sum(att_mask_ext, -2)       
+            att_map_pool = torch.sum(att_map1 * att_mask_ext, -1) / torch.sum(att_mask_ext, -1)       
         else:
-            att_map_pool = att_map1.mean(-2)
-        alpha_channel = self.attention_last2(att_map_pool)    
-        alpha_channel = torch.sigmoid(alpha_channel)  
-        alpha_channel = alpha_channel.unsqueeze(-2)
+            att_map_pool = att_map1.mean(-2)    
+        alpha_channel = torch.sigmoid(att_map_pool)  
+        alpha_channel = alpha_channel.unsqueeze(-1)
         attn_map = attn_map * alpha_channel
 
         attn_map = attn_map.reshape(batch_size, -1, self.embed_dim)
         
-        attn = self.attn_net(attn_map, isLastLayer=True)
+        attn = self.attn_net(attn_map)
         attn = attn.squeeze(1)
         return attn
 
