@@ -16,18 +16,11 @@ class Capsule(nn.Module):
         self.in_dim_caps = cfg.MODEL.BILINEAR.ATT_DIM
         self.out_dim_caps = cfg.MODEL.BILINEAR.ATT_DIM
         self.routings = routings
-    
+        self.weight = Variable(0.01 * torch.randn(1, 36, cfg.MODEL.BILINEAR.ATT_DIM, cfg.MODEL.BILINEAR.ATT_DIM)).cuda()
     def forward(self, x, isLastLayer):
-        self.in_num_caps = x.size()[1]
-        if isLastLayer:
-            self.out_num_caps = 1
-        else:
-            self.out_num_caps = x.size()[1]
-        self.weight = 0.01 * torch.randn(self.out_num_caps, self.in_num_caps, self.out_dim_caps, self.in_dim_caps).cuda()
-        
         x_hat = torch.squeeze(torch.matmul(self.weight, x[:, None, :, :, None]), dim=-1)
         x_hat_detached = x_hat.detach()
-        b = Variable(torch.zeros(x.size(0), self.out_num_caps, self.in_num_caps)).cuda()
+        b = Variable(torch.zeros(x.shape[0], 1, 36)).cuda()
         assert self.routings > 0, 'The \'routings\' should be > 0.'
         for i in range(self.routings):
             c = F.softmax(b, dim=1)
