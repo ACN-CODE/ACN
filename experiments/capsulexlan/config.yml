@@ -3,7 +3,7 @@ SEED: 1546884941.160048
 
 ############################ TRAIN ############################
 TRAIN:
-  BATCH_SIZE: 10
+  BATCH_SIZE: 40
   #################### SCHEDULED_SAMPLING ####################
   SCHEDULED_SAMPLING:
     START: 6
@@ -16,7 +16,7 @@ TRAIN:
 
 ############################ TEST ############################  
 TEST:
-  BATCH_SIZE: 36
+  BATCH_SIZE: 40
 
 ############################ DATA_LOADER ############################
 DATA_LOADER:
