@@ -265,7 +265,7 @@ class Trainer(object):
                 loss, loss_info = self.forward(kwargs) 
                 loss.backward() 
                 if self.rl_stage == False:
-                    utils.clip_gradient(self.optim.optimizer, self.model, cfg.SOLVER.GRAD_CLIP_TYPE, cfg.SOLVER.GRAD_CLIP)  #梯度裁剪
+                    utils.clip_gradient(self.optim.optimizer, self.model, cfg.SOLVER.GRAD_CLIP_TYPE, cfg.SOLVER.GRAD_CLIP) 
                 self.optim.step() 
                 self.optim.zero_grad() 
                 self.optim.scheduler_step('Iter') 

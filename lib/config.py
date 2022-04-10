@@ -324,7 +324,7 @@ __C.INFERENCE.BEAM_SIZE = 1
 
 __C.INFERENCE.GREEDY_DECODE = True # Greedy decode or sample decode
 
-__C.INFERENCE.COCO_PATH = '../imageCaptionCapsule_encodeDecode_mscoco36/cococaption'
+__C.INFERENCE.COCO_PATH = './cococaption'
 
 # ---------------------------------------------------------------------------- #
 # Misc options

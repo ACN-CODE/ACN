@@ -59,7 +59,7 @@ def sample_collate_val(batch):
     return indices, gv_feat, att_feats, att_mask
 
 
-def load_train(distributed, epoch, coco_set): #载入训练数据集
+def load_train(distributed, epoch, coco_set):
     sampler = samplers.distributed.DistributedSampler(coco_set, epoch=epoch) \
         if distributed else None
     shuffle = cfg.DATA_LOADER.SHUFFLE if sampler is None else False

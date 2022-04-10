@@ -59,8 +59,7 @@ class CapsuleLowRank(nn.Module):
             if mid_dropout > 0:
                 sequential.append(nn.Dropout(mid_dropout))
         self.attention_basic = nn.Sequential(*sequential) if len(sequential) > 0 else None   
-        self.attention_last = nn.Linear(mid_dims[-2], mid_dims[-1])  
-        # copy from sc_att
+        self.attention_last = nn.Linear(mid_dims[-2], mid_dims[-1]) 
         self.attention_last1 = nn.Linear(mid_dims[-2], 1)   
         self.attention_last2 = nn.Linear(mid_dims[-2], mid_dims[-1])  
         sequential = []                  
